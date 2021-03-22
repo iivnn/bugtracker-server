@@ -1,15 +1,13 @@
 import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
-import { User } from '../../models/User';
+import { Response } from 'express';
+import { User } from '../../../models/User';
 
-const signinPUT = async (req: any, res: any, next: any) => {
-
+const signupPUT = async (req: any, res: Response, next: any) => {
+    
     try{
         const UserSchema = mongoose.model('user');
-
-        const newUser: User = new User(
-                                req.body.login, 
-                                req.body.password);
+        const newUser: User = new User(req.body.login, req.body.password);
     
         bcrypt.genSalt(10, (err, salt) => {
     
@@ -17,7 +15,7 @@ const signinPUT = async (req: any, res: any, next: any) => {
                 return res.status(400).send();
             }
             if(err){
-                return res.stataus(500).send();
+                return res.status(500).send();
             }
     
             bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -28,10 +26,9 @@ const signinPUT = async (req: any, res: any, next: any) => {
     
                 newUser.password = hash;
     
-                new UserSchema(newUser)
-                .save()
+                new UserSchema(newUser).save()
                 .then(
-                    (result) => {
+                    () => {
                         return res.status(201).send();
                 })
                 .catch(
@@ -40,10 +37,9 @@ const signinPUT = async (req: any, res: any, next: any) => {
                 })
             })
         })
-
     }catch(err){
         return res.status(500).send();
     } 
 }
 
-export { signinPUT };
+export default signupPUT ;

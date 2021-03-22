@@ -1,13 +1,13 @@
 import passport from 'passport';
+import signinPOST from './controller/signin/signinPOST';
+import signupPUT from './controller/signin/signupPUT';
 import { Router } from 'express';
-import { signinPOST } from './controller/signinPost';
-import { signinPUT } from './controller/signinPUT';
 import { User } from '../models/User';
 
 const router = Router();
 User.setSchema();
 
 router.post('/signin', passport.authenticate('local'), signinPOST);
-router.put('/signin', signinPUT);
+router.put('/signup', signupPUT);
 
-export { router };
+export default router;

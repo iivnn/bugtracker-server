@@ -1,25 +1,23 @@
-import { User } from '../models/User'
+import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose';
 import { PassportStatic } from 'passport';
 import { Strategy } from 'passport-local';
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
-
-
-const UserSchema = mongoose.model('user');
+import { User } from '../models/User';
 
 const authentication = (passport: PassportStatic) => {
+
+    let UserSchema = mongoose.model('user');
     let user: User;
+
     passport.use(
-        new Strategy({
-            usernameField : 'login',
-            passwordField : 'password'},
-            (login, password, done) => {
-                UserSchema.findOne({login : login})
-                .then(
-                    (result) => {
-                        if(result == undefined){
-                            return done(null, false);                     
+        new Strategy({usernameField : 'login',passwordField : 'password'}, (login, password, done) => {
+            UserSchema.findOne({login : login})
+            .then(
+                (result) => {
+                    if(result == null){
+                        return done(null, false);                     
                     }
+
                     user = <User> <unknown> result;
 
                     if(user.password == null) return done(null, false);
@@ -35,14 +33,11 @@ const authentication = (passport: PassportStatic) => {
                         }
                     });
                 })
-                .catch(
-                    (err) => {
-                        return done(null, false, { message : 'erro interno'});        
-                    }
-                );
-            }
-        )
-    );
+            .catch(
+                (err) => {
+                    return done(null, false);        
+            });
+        }));
     
     passport.serializeUser((user, done) =>{
         done(null, user);
