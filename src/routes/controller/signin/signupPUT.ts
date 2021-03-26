@@ -1,42 +1,66 @@
 import bcrypt from 'bcryptjs';
-import mongoose from 'mongoose';
 import { Response } from 'express';
-import { User } from '../../../models/User';
+import { User } from '../../../classes/User';
+import { UserInfo } from '../../../classes/UserInfo';
 
 const signupPUT = async (req: any, res: Response, next: any) => {
     
     try{
-        const UserSchema = mongoose.model('user');
-        const newUser: User = new User(req.body.login, req.body.password);
-    
-        bcrypt.genSalt(10, (err, salt) => {
-    
-            if(newUser.password == null ) {
-                return res.status(400).send();
-            }
-            if(err){
-                return res.status(500).send();
-            }
-    
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-    
-                if(err){
-                    return res.status(500).send();
+        let newUserInfo = new UserInfo(
+            req.body.name,
+            req.body.email,
+            req.body.role);
+        
+        if(!newUserInfo.isEmailValid()){
+            return res.status(400).send();
+        }
+
+        let newUser= new User(
+            req.body.login, 
+            req.body.password, 
+            newUserInfo);
+        
+        if(!newUser.isValid()){
+            return res.status(400).send();
+        }
+
+        User.model().exists({login: req.body.login})
+        .then(
+            (exists) => {
+                if(exists){
+                    return res.status(400).send();
                 }
-    
-                newUser.password = hash;
-    
-                new UserSchema(newUser).save()
-                .then(
-                    () => {
-                        return res.status(201).send();
-                })
-                .catch(
-                    (err) =>{
+
+                bcrypt.genSalt(10, (err, salt) => {
+                    if(err){
                         return res.status(500).send();
+                    }  
+                    bcrypt.hash(newUser.password, salt, (err, hash) => {
+                        if(err){
+                            return res.status(500).send();
+                        }
+        
+                        newUser.password = hash;
+        
+                        User.model().create(newUser)
+                        .then(
+                            () => {
+                                return res.status(201).send();
+                        })
+                        .catch(
+                            (err) =>{
+                                return res.status(500).send();
+                        })
+                    })
                 })
-            })
         })
+        .catch(
+           () => {
+                return res.status(500).send();      
+        })
+
+
+        
     }catch(err){
         return res.status(500).send();
     } 

@@ -6,7 +6,7 @@ import passport from 'passport';
 import router from './routes/routes';
 import session from 'express-session';
 import { authentication } from './configs/authentication';
-import { Environment } from './configs/config';
+import { Environment } from './configs/environment';
 
 mongoose.Promise = global.Promise;
 mongoose.connect(Environment.URI, { useUnifiedTopology: true, useNewUrlParser: true });
