@@ -1,4 +1,4 @@
-const Environment= {
+const environment= {
     PORT: 3000,
     URI: 'mongodb://localhost:27017/bugtracker',
     SESSION: {
@@ -13,4 +13,4 @@ const Environment= {
     }
 };
 
-export { Environment };
+export default environment;

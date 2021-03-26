@@ -55,7 +55,7 @@ const signupPUT = async (req: any, res: Response, next: any) => {
                 })
         })
         .catch(
-           () => {
+           (err) => {
                 return res.status(500).send();      
         })
 

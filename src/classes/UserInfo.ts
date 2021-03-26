@@ -27,4 +27,5 @@ export class UserInfo{
 
         return regex.test(this.email);
     }
+
 }

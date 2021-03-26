@@ -11,8 +11,9 @@ const router = Router();
 
 setModels();
 
+//authentication
 router.post('/signin', passport.authenticate('local'), signinPOST);
-router.post('/signed', isAuthenticated, signedPOST )
+router.post('/signed', isAuthenticated, signedPOST)
 router.put('/signup', signupPUT);
 router.post('/logout', logoutPOST);
 export default router;

@@ -15,13 +15,8 @@ const authentication = (passport: PassportStatic) => {
                     if(result == null){
                         done(null, false);                     
                     }
-
-                    user = <User> <unknown> result;
-                    
+                    user = <User> <unknown> result;                   
                     bcrypt.compare(password, user.password, (err, success) => {
-                        if(err != null){
-                            done(null, false);
-                        }
                         if(success){
                             done(null, user);
                         }else{
@@ -46,4 +41,4 @@ const authentication = (passport: PassportStatic) => {
     });
 }
 
-export { authentication };
+export default authentication;
