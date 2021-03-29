@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Role } from "./enums/Role";
 
-export class UserInfo{
+export default class UserInfo{
     constructor(
         public name: string,
         public email: string,

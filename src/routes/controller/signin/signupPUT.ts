@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
+import User from '../../../classes/User';
+import UserInfo from '../../../classes/UserInfo';
 import { Response } from 'express';
-import { User } from '../../../classes/User';
-import { UserInfo } from '../../../classes/UserInfo';
 
 const signupPUT = async (req: any, res: Response, next: any) => {
     
@@ -62,7 +62,7 @@ const signupPUT = async (req: any, res: Response, next: any) => {
 
         
     }catch(err){
-        return res.status(500).send();
+        return res.status(400).send();
     } 
 }
 

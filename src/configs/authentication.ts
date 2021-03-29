@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { PassportStatic } from 'passport';
 import { Strategy } from 'passport-local';
-import { User } from '../classes/User';
+import User from '../classes/User';
 
 const authentication = (passport: PassportStatic) => {
 

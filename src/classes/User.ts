@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { UserInfo } from './UserInfo';
+import UserInfo from './UserInfo';
 
-export class User{
+export default class User{
     constructor(
         public login: string, 
         public password: string,       
@@ -15,7 +15,7 @@ export class User{
         let schema = new mongoose.Schema({
             login: { type: String, required: true },
             password: { type: String, required: true },
-            userInfo: { type: Object, require: true }
+            userInfo: { type: Object, required: true }
         })
         .set('timestamps', { timestamps: { createdAt: 'created_at' }});
 
@@ -35,10 +35,10 @@ export class User{
     }
 
     private isLoginLengthValid(): boolean {
-        return this.login.length >= 6;
+        return this.login.length >= 6 && this.login.length <= 20;
     }
     
     private isPasswordLenthValid(): boolean {
-        return this.password.length >= 6;   
+        return this.password.length >= 6 && this.login.length <= 20;   
     }
 }

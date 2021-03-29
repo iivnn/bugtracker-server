@@ -9,7 +9,7 @@ import session from 'express-session';
 import authentication from './configs/authentication';
 
 mongoose.Promise = global.Promise;
-mongoose.connect(environment.URI, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect(environment.URI, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false });
 
 const app = express();
 
