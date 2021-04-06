@@ -15,9 +15,7 @@ const projectDELETE= async (req: express.Request, res: express.Response, next: e
         })
 
     }catch(err){
-
         return res.send(400).send();
-
     }
     
 }

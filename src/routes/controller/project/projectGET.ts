@@ -16,9 +16,7 @@ const projectGET= async (req: express.Request, res: express.Response, next: expr
         })  
 
     }catch(err){
-
         return res.send(400).send();
-
     }
     
 }

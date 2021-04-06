@@ -30,9 +30,7 @@ const projectPATCH = async (req: express.Request, res: express.Response, next: e
         })
 
     }catch(err){
-
         return res.status(400).send();
-
     }       
     
 }
