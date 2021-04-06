@@ -10,6 +10,7 @@ import setModels from '../configs/models';
 import signedPOST from './controller/signin/signedPOST';
 import signinPOST from './controller/signin/signinPOST';
 import signupPUT from './controller/signin/signupPUT';
+import userGET from './controller/signin/userGET';
 import { Router } from 'express';
 
 const router = Router();
@@ -21,6 +22,7 @@ router.post('/signin', passport.authenticate('local'), signinPOST);
 router.post('/signed', isAuthenticated, signedPOST)
 router.put('/signup', isAuthenticated, isManager, signupPUT);
 router.post('/logout', isAuthenticated, logoutPOST);
+router.get('/user', isAuthenticated, userGET)
 //project
 router.put('/project', isAuthenticated, isManager, projectPUT);
 router.get('/project', isAuthenticated, projectGET);
